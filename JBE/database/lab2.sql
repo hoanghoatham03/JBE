@@ -62,7 +62,7 @@ create table staffs(
     last_name varchar(50),
     email varchar(255),
 	phone varchar(25),
-    `active` tinyint,
+    active tinyint,
     store_id int,
     manager_id int,
     foreign key (store_id) references stores(store_id),
@@ -185,108 +185,8 @@ VALUES
     (3, 2, 10, 1, 599.99, 0.05),
     (4, 1, 2, 2, 749.99, 0.10);
 
-#2.1
-select first_name, last_name, email
-from customers;
-#2.2
-select *
-from customers
-where state = 'CA';
-#2.3
-select *
-from customers
-order by first_name;
-#2.4
-select city, count(customer_id) customer_count
-from customers
-where state = 'CA'
-group by city;
-#2.5
-select city
-from customers
-where state = 'CA'
-group by city
-having count(customer_id) > 10;
-#2.6
-select product_name , model_year
-from products
-where list_price between 1000 and 2000;
-#2.7
-select first_name, email
-from staffs
-where `active` = 1 ;
 
 
-#2.8
-select product_name , brand_id
-from products
-where list_price > 1000 and model_year = 2016;
-#2.9
-select order_id, customer_id
-from orders
-where shipped_date is not null;
-#2.10
-select product_id, list_price, quantity
-from order_items
-where discount > 0 and quantity = 2;
 
-create table test(
-test_id int primary key,
-num varchar(255)
-)
-
-#join
-#1.1
-select product_name, list_price, brand_name
-from products p inner join brands b on p.brand_id = b.brand_id
-where list_price > 1000; 
-
-#1.2
-select c.customer_id, first_name, last_name, order_id, order_status
-from customers c inner join orders o on c.customer_id = o.customer_id
-where order_status = 4;
-
-#1.3
-select a.first_name as employee_fisrt_name, a.first_name as employee_fisrt_name, a.email as employee_email,
-b.first_name as manager_fisrt_name, b.last_name as manager_last_name, b.email as manager_email
-from staffs a left join staffs b on a.manager_id = b.staff_id;
-
-#1.4
-select product_name, brand_name
-from products p left join brands b on p.brand_id = b.brand_id;
-
-#1.5
-select product_name, model_year , brand_name
-from products p inner join brands b on p.brand_id = b.brand_id
-where model_year >= 2016;
-
-#1.6
-select order_id ,product_name, quantity
-from products p inner join order_items o on p.product_id = o.product_id
-order by order_id;
-
-#1.7
-select product_name, category_name
-from products p inner join categories c on p.category_id = c.category_id
-where category_name = 'Mountain Bikes';
-
-#1.8
-select product_name, list_price, category_name, brand_name
-from products p inner join categories c on p.category_id = c.category_id inner join brands b on p.brand_id = b.brand_id
-where list_price > 500 and category_name =  'Electric Bikes';
-
-#1.9
-select c.customer_id, first_name, last_name, order_id, shipped_date
-from customers c left join orders o on c.customer_id = o.customer_id
-where shipped_date is null;
-
-#1.10
-select store_name, count(order_id) as order_count
-from stores s left join orders o on s.store_id = o.store_id
-group by store_name;
-
-
-select product_name, list_price, brand_name
-from products p full outer join brands b on p.brand_id = b.brand_id
 
 
